@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Nivel 1 - Social Media</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="button-container">
+            <button id="themeToggle">Alterar Tema</button>
+        </div>       
+        <h1>Social Media</h1>
+        <div id="form">
+            <input type="text" id="postTitle" placeholder="Título">
+            <textarea id="postContent" placeholder="Conteúdo do post"></textarea>
+            <div class="button-container">
+                <button onclick="criarPost()" class="create-post-button">Criar Post</button>
+            </div> 
+        </div>
+        <div id="posts"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

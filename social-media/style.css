@@ -1,0 +1,193 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #C1E8FF;
+    padding: 20px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007bff;
+}
+
+#form {
+    margin-top: 20px;
+}
+
+.post {
+    margin-top: 20px;
+    max-width: 100%;
+    overflow: hidden;
+    max-height: 100%;
+    padding: 20px;
+    border: 1px solid #ced4da;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+}
+
+.post p{
+    max-height: 100%;
+    max-width: none;
+}
+
+/* Comments */
+.comment {
+    margin-top: 10px;
+    max-height: 100%;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #e9ecef;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+}
+
+.show-comments-link {
+    color: #69818D; 
+    cursor: pointer; 
+}
+
+/* Buttons */
+
+button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.theme-toggle-button {
+    float: right;
+}
+
+.create-post-button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-left: 10px; /* Adicione um espaçamento entre os botões */
+}
+
+.create-post-button:hover {
+    background-color: #0056b3;
+}
+
+input[type="text"], textarea {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font: inherit;
+    font-size: 16px;
+}
+
+.button-container{
+    display: flex;
+    justify-content: flex-end; /* Alinha os filhos à direita */
+    margin-top: 10px;
+}
+.button-container button {
+    margin-left: 10px; /* Adicione um espaçamento entre os botões */
+}
+
+/* Adicione transições suaves para elementos clicáveis e campos de entrada */
+button, input[type="text"], textarea {
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-top: 5px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+@media (max-width: 1200px) {
+    input[type="text"], textarea {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 992px) {
+    input[type="text"], textarea {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .post {
+        padding: 10px;
+        margin-top: 10px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    input[type="text"], textarea {
+        font-size: 14px;
+    }
+}
+
+/*****ALTERA O TEMA DO BLOG*/
+body.dark-theme {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.dark-theme .container {
+    background-color: #1f1f1f;
+    border-color: #444;
+}
+
+.dark-theme .post {
+    background-color: #333;
+    border-color: #555;
+}
+
+.dark-theme .comment {
+    background-color: #444;
+    border-color: #666;
+}
+
+.dark-theme button {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.dark-theme button:hover {
+    background-color: #0056b3;
+}
+
