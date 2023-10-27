@@ -84,8 +84,7 @@ function exibirPosts() {
                 <div class="button-container">
                     <button onclick="curtirComentario(${index}, ${i})">Curtir (${post.comments[i].likes})</button>
                     <button onclick="excluirComentario(${index}, ${i})">Excluir</button>
-                </div>
-                
+                </div>    
             `;
             commentsContainer.appendChild(commentDiv);
         }
@@ -104,8 +103,7 @@ function exibirPosts() {
                         <div class="button-container">
                             <button onclick="curtirComentario(${index}, ${i})">Curtir (${post.comments[i].likes})</button>
                             <button onclick="excluirComentario(${index}, ${i})">Excluir</button>
-                        </div>
-                        
+                        </div>  
                     `;
                     hiddenCommentsContainer.appendChild(commentDiv);
                 }
@@ -166,8 +164,6 @@ function curtirPost(index) {
     posts[index].likes++;
     exibirPosts();
 }
-
-
 
 // Função para excluir um post
 function excluirPost(index) {

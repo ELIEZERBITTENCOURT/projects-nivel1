@@ -60,7 +60,6 @@ h1 {
 }
 
 /* Buttons */
-
 button {
     background-color: #007bff;
     color: #ffffff;
@@ -127,7 +126,6 @@ button, input[type="text"], textarea {
         opacity: 1;
     }
 }
-
 
 @media (max-width: 1200px) {
     input[type="text"], textarea {
