@@ -1,0 +1,59 @@
+# Arquivos temporários ou específicos de um ambiente
+*.log
+*.pot
+*.pyc
+__pycache__
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Ambiente virtual Python
+venv/
+env/
+ENV/
+
+# Arquivos de compilação
+*.out
+*.class
+
+# Arquivos de configuração e chaves
+*.ini
+*.env
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+*.env*.private
+
+# Dependências
+.Python
+pip-log.txt
+pipenv-shims/
+
+# IDEs e editores
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw??
+*.swo
+*.swn
+*.pydevproject
+*.project
+*.classpath
+*.tags
+.settings/
+*.tsserver-*
+
+# Arquivos de sistema operacional
+.DS_Store
+Thumbs.db
+
+# Logs e saídas de teste
+*.log
+*.logs
+*.results
