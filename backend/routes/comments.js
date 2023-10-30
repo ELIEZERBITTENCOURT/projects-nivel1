@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Comment = require('../models/Comments');
+const Post = require('../models/Post');
 
 // Rota para criar um novo comentário
 router.post('/:postId/comments', async (req, res) => {
@@ -48,6 +49,21 @@ router.delete('/comments/:commentId', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Erro ao excluir o comentário.' });
+    }
+});
+
+// Rota para excluir todos os comentários de um post específico antes de excluir o post
+router.delete('/:postId/comments', async (req, res) => {
+    const postId = req.params.postId;
+    try {
+        await Comment.deleteAllComments(postId);
+
+        await Post.deletePost(postId);
+
+        res.json({ message: 'Post e seus comentários foram excluídos com sucesso!' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erro ao excluir o post e seus comentários.' });
     }
 });
 
