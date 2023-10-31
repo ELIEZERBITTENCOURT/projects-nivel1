@@ -1,200 +1,266 @@
-//Variável para controlar o tema
+const BASE_URL = 'http://localhost:3000';
+
 let isDarkTheme = false;
 
-// Função para alternar entre os temas claro e escuro
 function alternarTema() {
     const body = document.body;
     isDarkTheme = !isDarkTheme;
     body.classList.toggle('dark-theme', isDarkTheme);
 }
 
-// Array para armazenar os posts
-let posts = [];
-
-// Função para criar um novo post
-function criarPost() {
-    let title = document.getElementById("postTitle").value;
-    let content = document.getElementById("postContent").value;
-
-    // Verifica se ambos os campos foram preenchidos
-    if (title && content) {
-        let post = {
-            title: title,
-            content: content,
-            likes: 0,
-            comments: []
-        };
-
-        // Adiciona o post ao array de posts
-        posts.unshift(post);
-
-        // Limpa os campos do formulário
-        document.getElementById("postTitle").value = "";
-        document.getElementById("postContent").value = "";
-
-        // Atualiza a lista de posts
-        exibirPosts();
-    } else {
-        alert("Por favor, preencha todos os campos.");
-    }
-}
-
-// Função para exibir os posts na página
-function exibirPosts() {
-    let postsContainer = document.getElementById("posts");
-    postsContainer.innerHTML = "";
-
-    posts.forEach(function (post, index) {
-        let postDiv = document.createElement("div");
-        postDiv.classList.add("post");
-        postDiv.innerHTML = `<h2>${post.title}</h2><p>${post.content}</p>
-        <div id="editFormTemplate_${index}" style="display: none;">
-        <h3>Editar Post</h3>
-        <input type="text" id="editTitle_${index}">
-        <textarea id="editContent_${index}"></textarea>
-        <button id="saveEditButton_${index}">Salvar</button>
-        </div>
-        <div class="button-container">
-        <button onclick="curtirPost(${index})">Curtir (${post.likes})</button>
-        <button onclick="editarPost(${index})">Editar</button>
-        <button onclick="excluirPost(${index})">Excluir</button>
-        </div>
-        <div id="comments${index}"></div>
-        <p class="show-comments-link" id="showComments${index}">Ver todos os ${post.comments.length} comentários</p>
-        <div class="hidden-comments" id="hiddenComments${index}"></div>
-        <input type="text" id="commentInput${index}" placeholder="Adicione um comentário">
-        <div class="button-container">
-        <button onclick="adicionarComentario(${index})">Comentar</button></div>`;
-        postsContainer.appendChild(postDiv);
-
-        // Exibe os comentários
-        let commentsContainer = document.getElementById(`comments${index}`);
-        let hiddenCommentsContainer = document.getElementById(`hiddenComments${index}`);
-        let showCommentsLink = document.getElementById(`showComments${index}`);
-
-        commentsContainer.innerHTML = "";
-        hiddenCommentsContainer.innerHTML = "";
-
-        // Adiciona no máximo 2 comentários ao contêiner
-        for (let i = 0; i < Math.min(2, post.comments.length); i++) {
-            let commentDiv = document.createElement("div");
-            commentDiv.classList.add("comment");
-            commentDiv.innerHTML = `
-            <p>${post.comments[i].text}</p>
-                <div class="button-container">
-                    <button onclick="curtirComentario(${index}, ${i})">Curtir (${post.comments[i].likes})</button>
-                    <button onclick="excluirComentario(${index}, ${i})">Excluir</button>
-                </div>    
-            `;
-            commentsContainer.appendChild(commentDiv);
-        }
-
-        // Se houver mais de 2 comentários, exiba o link "Ver todos os comentários"
-        if (post.comments.length > 2) {
-            showCommentsLink.style.display = "block"; // Exibe o link
-            // Adiciona um evento de clique ao link para mostrar os comentários ocultos
-            showCommentsLink.addEventListener('click', function () {
-                // Adiciona os comentários ocultos ao contêiner
-                for (let i = 2; i < post.comments.length; i++) {
-                    let commentDiv = document.createElement("div");
-                    commentDiv.classList.add("comment");
-                    commentDiv.innerHTML = `
-                    <p>${post.comments[i].text}</p>
-                        <div class="button-container">
-                            <button onclick="curtirComentario(${index}, ${i})">Curtir (${post.comments[i].likes})</button>
-                            <button onclick="excluirComentario(${index}, ${i})">Excluir</button>
-                        </div>  
-                    `;
-                    hiddenCommentsContainer.appendChild(commentDiv);
-                }
-                // Exibe o contêiner de comentários ocultos
-                hiddenCommentsContainer.style.display = "block";
-                // Esconde o link "Ver todos os comentários" após mostrar todos os comentários
-                showCommentsLink.style.display = "none";
-            });
-        } else {
-            // Se houver 2 ou menos comentários, esconda o link
-            showCommentsLink.style.display = "none";
-        }
-    });
-}
-
-// Função para editar um post
-function editarPost(index) {
-    const editFormTemplate = document.getElementById(`editFormTemplate_${index}`);
-    const editTitleInput = document.getElementById(`editTitle_${index}`);
-    const editContentInput = document.getElementById(`editContent_${index}`);
-    const saveEditButton = document.getElementById(`saveEditButton_${index}`);
-
-    // Preenche o formulário com os dados do post atual
-    editTitleInput.value = posts[index].title;
-    editContentInput.value = posts[index].content;
-
-    // Adiciona um evento de clique ao botão "Salvar" para salvar as edições
-    saveEditButton.onclick = function () {
-        // Atualiza o título e o conteúdo do post no array de posts
-        posts[index].title = editTitleInput.value;
-        posts[index].content = editContentInput.value;
-
-        // Atualiza a exibição dos posts
-        exibirPosts();
-
-        // Esconde o formulário de edição
-        editFormTemplate.style.display = "none";
-    };
-
-    // Exibe o formulário de edição
-    editFormTemplate.style.display = "block";
-}
-
-// Função para curtir um comentário em um post
-function curtirComentario(postIndex, commentIndex) {
-    posts[postIndex].comments[commentIndex].likes++;
-    exibirPosts();
-}
-
-// Função para excluir um comentário de um post
-function excluirComentario(postIndex, commentIndex) {
-    posts[postIndex].comments.splice(commentIndex, 1);
-    exibirPosts();
-}
-
-// Função para curtir um post
-function curtirPost(index) {
-    posts[index].likes++;
-    exibirPosts();
-}
-
-// Função para excluir um post
-function excluirPost(index) {
-    // Remove o post no índice fornecido do array de posts
-    posts.splice(index, 1);
-
-    // Atualiza a exibição dos posts
-    exibirPosts();
-}
-
-// Função para adicionar um comentário a um post
-function adicionarComentario(index) {
-    let commentInput = document.getElementById(`commentInput${index}`);
-    let commentText = commentInput.value;
-
-    if (commentText) {
-        let newComment = {
-            text: commentText,
-            likes: 0
-        };
-        posts[index].comments.push(newComment);
-        commentInput.value = "";
-        exibirPosts();
-    } else {
-        alert("Por favor, digite um comentário.");
-    }
-}
-
-// Adiciona um event listener ao botão de alternar tema
 const themeToggle = document.getElementById('themeToggle');
 themeToggle.addEventListener('click', alternarTema);
 
-// Chama a função exibirPosts() para exibir os posts inicialmente
-exibirPosts();
+const postsContainer = document.getElementById("posts-container");
+
+document.addEventListener('DOMContentLoaded', function () {
+    exibirPosts();
+});
+
+function exibirPosts() {
+    fetch(`${BASE_URL}/posts`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => response.json())
+        .then(postsData => {
+            let posts = postsData;
+            let postsContainer = document.getElementById("posts-container");
+            postsContainer.innerHTML = "";
+
+            posts.forEach(function (post) {
+                let postDiv = document.createElement("div");
+                postDiv.classList.add("post");
+                postDiv.innerHTML = `
+                <h2>${post.title}</h2>
+                <p>${post.content}</p>
+                <div id="editFormTemplate_${post.id}" style="display: none;">
+                    <h3>Editar postagem</h3>
+                    <input type="text" id="editTitle_${post.id}" value="${post.title}">
+                    <textarea id="editContent_${post.id}">${post.content}</textarea>
+                    <button class="save-button" data-post-id="${post.id}">Salvar</button>
+                </div>
+                <div class="button-container">
+                    <button onclick="curtirPost(${post.id})">Curtir (${post.likes})</button>
+                    <button onclick="editarPost(${post.id})">Editar</button>
+                    <button onclick="excluirPost(${post.id})">Excluir</button>
+                </div>
+                <div id="comments${post.id}"></div>
+                    <p class="show-comments-link" id="showComments${post.id}">Ver todos os ${post.comments.length} comentários</p>
+                <div class="hidden-comments" id="hiddenComments${post.id}"></div>
+                    <input type="text" id="commentInput${post.id}" placeholder="Adicionar um comentário">
+                <div class="button-container">
+                    <button id="btnAdicionarComentario" onclick="adicionarComentario(${post.id})">Comentário</button>
+                </div>
+            `;
+                postsContainer.appendChild(postDiv);
+
+                let commentsContainer = document.getElementById(`comments${post.id}`);
+                let hiddenCommentsContainer = document.getElementById(`hiddenComments${post.id}`);
+                let showCommentsLink = document.getElementById(`showComments${post.id}`);
+
+                commentsContainer.innerHTML = "";
+                hiddenCommentsContainer.innerHTML = "";
+
+                for (let i = 0; i < Math.min(2, post.comments ? post.comments.length : 0); i++) {
+                    if (post.comments && post.comments[i]) {
+                        let commentDiv = document.createElement("div");
+                        commentDiv.classList.add("comment");
+                        commentDiv.innerHTML = `
+                    <p>${post.comments[i].text}</p>
+                    <div class="button-container">
+                        <button onclick="curtirComentario(${post.comments[i].id})">Curtir (${post.comments[i].likes})</button>
+                        <button onclick="excluirComentario(${post.id}, ${post.comments[i].id})">Excluir</button>
+                    </div>
+                `;
+                        commentsContainer.appendChild(commentDiv);
+                    }
+                }
+
+                if (post.comments.length > 2) {
+                    showCommentsLink.style.display = "block";
+
+                    showCommentsLink.addEventListener('click', function () {
+                        for (let i = 2; i < post.comments.length; i++) {
+                            let commentDiv = document.createElement("div");
+                            commentDiv.classList.add("comment");
+                            commentDiv.innerHTML = `
+                            <p>${post.comments[i].text}</p>
+                            <div class="button-container">
+                                <button onclick="curtirComentario(${post.comments[i].id})">Curtir (${post.comments[i].likes})</button>
+                                <button onclick="excluirComentario(${post.id}, ${post.comments[i].id})">Excluir</button>
+                            </div>
+                        `;
+                            hiddenCommentsContainer.appendChild(commentDiv);
+                        }
+                        hiddenCommentsContainer.style.display = "block";
+                        showCommentsLink.style.display = "none";
+                    });
+                } else {
+                    showCommentsLink.style.display = "none";
+                }
+            });
+        })
+        .catch(erro => console.error('Erro:', erro));
+}
+
+function createPost() {
+    const title = document.getElementById("post-title").value;
+    const content = document.getElementById("post-content").value;
+
+    if (title && content) {
+        let postData = {
+            title: title,
+            content: content,
+            like: 0,
+            comments: []
+        };
+
+        fetch(`${BASE_URL}/posts`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(postData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao criar o post.');
+                }
+                return response.json();
+            })
+            .then(postData => {
+                exibirPosts();
+                document.getElementById("post-title").value = "";
+                document.getElementById("post-content").value = "";
+            })
+
+    }
+}
+
+function curtirPost(postId) {
+    fetch(`${BASE_URL}/posts/${postId}/like`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                exibirPosts();
+            } else {
+                console.error('Erro ao curtir o post');
+            }
+        })
+        .catch(error => console.error('Erro:', error));
+}
+
+function editarPost(postId) {
+    const editForm = document.getElementById(`editFormTemplate_${postId}`);
+    editForm.style.display = 'block';
+
+    const currentTitle = document.getElementById(`editTitle_${postId}`).value;
+    const currentContent = document.getElementById(`editContent_${postId}`).value;
+
+    document.getElementById(`editTitle_${postId}`).value = currentTitle;
+    document.getElementById(`editContent_${postId}`).value = currentContent;
+
+    const saveButton = document.querySelector(`#editFormTemplate_${postId} .save-button`);
+    saveButton.addEventListener('click', function () {
+        const newTitle = document.getElementById(`editTitle_${postId}`).value;
+        const newContent = document.getElementById(`editContent_${postId}`).value;
+
+        fetch(`${BASE_URL}/posts/${postId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ title: newTitle, content: newContent })
+        })
+            .then(response => {
+                if (response.ok) {
+                    editForm.style.display = 'none';
+
+                    exibirPosts();
+                } else {
+                    console.error('Erro ao editar o post');
+                }
+            })
+            .catch(error => console.error('Erro:', error));
+    });
+}
+
+function excluirPost(postId) {
+    fetch(`${BASE_URL}/posts/${postId}`, {
+        method: 'DELETE'
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Erro ao excluir o post');
+            }
+        })
+        .then(data => {
+            exibirPosts();
+        })
+        .catch(error => console.error('Erro:', error));
+}
+
+function adicionarComentario(postId) {
+    const commentInput = document.getElementById(`commentInput${postId}`);
+    const commentText = commentInput.value;
+
+    if (commentText) {
+        fetch(`${BASE_URL}/comments/${postId}/comments`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ text: commentText })
+        })
+            .then(response => {
+                if (response.ok) {
+                    exibirPosts();
+                    commentInput.value = "";
+                } else {
+                    console.error('Erro ao adicionar o comentário');
+                }
+            })
+            .catch(error => console.error('Erro:', error));
+    }
+}
+
+function curtirComentario(commentId) {
+    fetch(`${BASE_URL}/comments/comments/${commentId}/like`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                exibirPosts();
+            } else {
+                console.error('Erro ao curtir o comentário');
+            }
+        })
+        .catch(error => console.error('Erro:', error));
+}
+
+function excluirComentario(postId, commentId) {
+    commentId = parseInt(commentId);
+    fetch(`${BASE_URL}/comments/${postId}/comments/${commentId}`, {
+        method: 'DELETE'
+    })
+        .then(response => {
+            if (response.ok) {
+                exibirPosts();
+            } else {
+                console.error('Erro ao excluir o comentário');
+            }
+        })
+        .catch(error => console.error('Erro:', error));
+}
