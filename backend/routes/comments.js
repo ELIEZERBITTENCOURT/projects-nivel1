@@ -40,8 +40,9 @@ router.put('/comments/:commentId/like', async (req, res) => {
     }
 });
 
-// Rota para excluir um comentário
-router.delete('/comments/:commentId', async (req, res) => {
+// Rota para excluir um comentário de um post específico
+router.delete('/:postId/comments/:commentId', async (req, res) => {
+    const postId = req.params.postId;
     const commentId = req.params.commentId;
     try {
         await Comment.deleteComment(commentId);
@@ -53,7 +54,7 @@ router.delete('/comments/:commentId', async (req, res) => {
 });
 
 // Rota para excluir todos os comentários de um post específico antes de excluir o post
-router.delete('/:postId/comments', async (req, res) => {
+router.delete('/:postId/comments/all', async (req, res) => {
     const postId = req.params.postId;
     try {
         await Comment.deleteAllComments(postId);
@@ -67,17 +68,5 @@ router.delete('/:postId/comments', async (req, res) => {
     }
 });
 
-// Rota para responder a um comentário
-router.post('/comments/:commentId/reply', async (req, res) => {
-    const commentId = req.params.commentId;
-    const { text } = req.body;
-    try {
-        const newReply = await Comment.createComment(commentId, text);
-        res.json(newReply);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Erro ao criar a resposta ao comentário.' });
-    }
-});
 
 module.exports = router;

@@ -44,6 +44,7 @@ class Comment {
     });
   }
 
+  //add para futuras modificações
   static createReply(commentId, text) {
     return new Promise((resolve, reject) => {
       const query = 'INSERT INTO comments (parent_comment_id, text) VALUES (?, ?)';
@@ -69,6 +70,19 @@ class Comment {
           } else {
             reject({ error: 'Comentário não encontrado.' });
           }
+        }
+      });
+    });
+  }
+
+  static deleteAllComments(postId) {
+    return new Promise((resolve, reject) => {
+      const query = 'DELETE FROM comments WHERE post_id = ?';
+      mysqlConnection.query(query, [postId], (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result.affectedRows);
         }
       });
     });
