@@ -36,23 +36,27 @@ function exibirPosts() {
                 postDiv.innerHTML = `
                 <h2>${post.title}</h2>
                 <p>${post.content}</p>
-                <div id="editFormTemplate_${post.id}" style="display: none;">
+                <div class="edit-form" id="editFormTemplate_${post.id}" style="display: none;">
                     <h3>Editar postagem</h3>
                     <input type="text" id="editTitle_${post.id}" value="${post.title}">
                     <textarea id="editContent_${post.id}">${post.content}</textarea>
+                    <div class="button-container">
                     <button class="save-button" data-post-id="${post.id}">Salvar</button>
+                    <button class="cancel-button" onclick="cancelarEdicao(${post.id})">Cancelar</button>
+                    </div>
                 </div>
                 <div class="button-container">
                     <button onclick="curtirPost(${post.id})">Curtir (${post.likes})</button>
                     <button onclick="editarPost(${post.id})">Editar</button>
                     <button onclick="excluirPost(${post.id})">Excluir</button>
                 </div>
-                <div id="comments${post.id}"></div>
+                
+                <div class="comment-container" id="comments${post.id}"></div>
                     <p class="show-comments-link" id="showComments${post.id}">Ver todos os ${post.comments.length} comentários</p>
                 <div class="hidden-comments" id="hiddenComments${post.id}"></div>
                     <input type="text" id="commentInput${post.id}" placeholder="Adicionar um comentário">
                 <div class="button-container">
-                    <button id="btnAdicionarComentario" onclick="adicionarComentario(${post.id})">Comentário</button>
+                    <button id="btnAdicionarComentario" onclick="adicionarComentario(${post.id})">Comentar</button>
                 </div>
             `;
                 postsContainer.appendChild(postDiv);
@@ -190,6 +194,21 @@ function editarPost(postId) {
             })
             .catch(error => console.error('Erro:', error));
     });
+}
+
+function cancelarEdicao(postId) {
+    const editForm = document.getElementById(`editFormTemplate_${postId}`);
+    editForm.style.display = 'none';
+
+    // Restaurar os valores originais do título e conteúdo
+    const originalTitle = editForm.getAttribute('data-original-title');
+    const originalContent = editForm.getAttribute('data-original-content');
+
+    const titleInput = document.getElementById(`editTitle_${postId}`);
+    const contentTextarea = document.getElementById(`editContent_${postId}`);
+
+    titleInput.value = originalTitle;
+    contentTextarea.value = originalContent;
 }
 
 function excluirPost(postId) {
