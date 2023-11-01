@@ -1,32 +1,72 @@
-# Social Media - Projeto de Nível 1
+# Blog de Posts
 
-Este é um projeto simples de rede social onde os usuários podem criar, editar, curtir e excluir posts, bem como adicionar, curtir e excluir comentários nos posts.
+Este é um aplicativo de blog simples onde os usuários podem criar, editar, curtir e excluir posts, bem como adicionar, curtir e excluir comentários.
 
-## Funcionalidades
+## Backend
 
-- **Criar um Novo Post:** Os usuários podem criar um novo post inserindo um título e conteúdo do post. Ambos os campos são obrigatórios. Ao criar um novo post, ele aparecerá no topo da lista de posts.
+### Configuração do Backend
 
-- **Editar um Post:** Os usuários podem editar um post clicando no botão "Editar". Isso abrirá um formulário preenchido com os dados do post atual, permitindo que o usuário os edite. Após as edições, o post será atualizado na lista de posts.
+1. **Clone o repositório**
 
-- **Curtir um Post:** Os usuários podem curtir um post clicando no botão "Curtir". O número de curtidas será exibido ao lado do botão e será atualizado dinamicamente quando um usuário curte o post.
+   ```shell
+   git clone <https://github.com/ELIEZERBITTENCOURT/projects-nivel1.git>
+   ```
 
-- **Excluir um Post:** Os usuários podem excluir um post clicando no botão "Excluir". O post será removido da lista de posts.
+2. **Instale as dependências**
 
-- **Adicionar um Comentário:** Os usuários podem adicionar um comentário a um post inserindo o texto do comentário no campo de entrada e clicando no botão "Comentar". Os comentários aparecerão abaixo do post.
+   ```shell
+   cd backend
+   npm install
+   ```
 
-- **Curtir um Comentário:** Os usuários podem curtir um comentário clicando no botão "Curtir" ao lado do comentário. O número de curtidas será exibido ao lado do botão e será atualizado dinamicamente quando um usuário curte o comentário.
+3. **Configuração do Banco de Dados**
 
-- **Excluir um Comentário:** Os usuários podem excluir um comentário clicando no botão "Excluir" ao lado do comentário. O comentário será removido do post.
+   Configure seu banco de dados no arquivo `config.js`. Você pode usar MongoDB, MySQL, PostgreSQL ou qualquer outro banco de dados de sua preferência. Certifique-se de fornecer as informações de conexão corretas.
 
-- **Alterar Tema:** Os usuários podem alternar entre o tema claro e escuro clicando no botão "Alterar Tema". O tema selecionado será aplicado ao fundo da página.
+4. **Inicie o servidor**
 
-## Estrutura do Código
+    ```shell
+        node ./server.js
+    ```
 
-- **`index.html`:** Contém a estrutura HTML da página, incluindo os elementos para entrada de título e conteúdo do post, bem como os botões para interação do usuário.
+   O servidor será iniciado na porta `3000` por padrão. Você pode alterar a porta no arquivo `config.js` se desejar.
 
-- **`style.css`:** Arquivo de estilo que define a aparência da página. Inclui regras para os temas claro e escuro, bem como o layout dos posts, comentários e botões.
+### Rotas da API
 
-- **`script.js`:** Contém o código JavaScript para manipular a lógica do aplicativo. Isso inclui funções para criar, editar, curtir, excluir posts e comentários, além de alternar temas.
+- **GET /posts**: Obtém todos os posts.
+- **GET /posts/:id**: Obtém um post específico pelo ID.
+- **POST /posts**: Cria um novo post.
+  - Corpo da requisição: `{ "title": "Título do Post", "content": "Conteúdo do Post" }`
+- **PUT /posts/:id**: Atualiza um post existente pelo ID.
+  - Corpo da requisição: `{ "title": "Novo Título", "content": "Novo Conteúdo" }`
+- **DELETE /posts/:id**: Exclui um post pelo ID.
+- **PUT /posts/:id/like**: Incrementa o contador de curtidas de um post pelo ID.
+- **POST /posts/:id/comments**: Adiciona um novo comentário a um post pelo ID.
+  - Corpo da requisição: `{ "text": "Conteúdo do Comentário" }`
+- **PUT /posts/:postId/comments/:commentId/like**: Incrementa o contador de curtidas de um comentário em um post pelo ID do post e ID do comentário.
+- **DELETE /posts/:postId/comments/:commentId**: Exclui um comentário de um post pelo ID do post e ID do comentário.
+
+## Frontend
+
+### Configuração do Frontend
+
+1. **Inicie o servidor de desenvolvimento**
+   O aplicativo será iniciado e estará acessível em `http://localhost:3000`.
+
+### Mudanças no Frontend
+
+- **Criação de Posts**: Os usuários podem criar novos posts fornecendo um título e conteúdo. Os posts criados são exibidos na página principal.
+- **Edição de Posts**: Os usuários podem editar posts existentes clicando no botão "Editar" em um post específico. Eles podem modificar o título e o conteúdo e salvar as alterações.
+- **Exclusão de Posts**: Os usuários podem excluir posts existentes clicando no botão "Excluir" em um post específico.
+- **Curtir Posts**: Os usuários podem curtir posts clicando no botão "Curtir". O número de curtidas é exibido ao lado do botão.
+- **Adição de Comentários**: Os usuários podem adicionar comentários a um post específico fornecendo o conteúdo do comentário e clicando no botão "Comentar".
+- **Edição de Comentários**: Os usuários podem editar comentários existentes clicando no botão "Editar" em um comentário específico. Eles podem modificar o conteúdo do comentário e salvar as alterações.
+- **Exclusão de Comentários**: Os usuários podem excluir comentários existentes clicando no botão "Excluir" em um comentário específico.
+- **Curtir Comentários**: Os usuários podem curtir comentários clicando no botão "Curtir" em um comentário específico. O número de curtidas é exibido ao lado do botão.
+
+**Nota**: Certifique-se de ter o backend em execução enquanto estiver usando o aplicativo frontend. Você pode verificar a seção **Configuração do Backend** acima para obter informações sobre como iniciar o servidor backend.
+
+Este projeto é uma ótima base para construir aplicativos de blog mais complexos com funcionalidades adicionais, como autenticação de usuários, categorias de postagem, tags e muito mais. Sinta-se à vontade para personalizá-lo e expandi-lo conforme suas necessidades!
 
 ## Autor
 
