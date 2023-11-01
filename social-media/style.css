@@ -1,5 +1,5 @@
 body {
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Poppins', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f8f9fa;
     margin: 0;
     padding: 0;
@@ -8,28 +8,46 @@ body {
 .container {
     max-width: 800px;
     margin: 0 auto;
-    background-color: #C1E8FF;
+    background-color: #4cb3a0;
     padding: 20px;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
     border-radius: 10px;
     margin-top: 20px;
 }
 
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #007bff;
+#post-form h1 {
+    font-size: 36px;
+    color: #1f5d5e;
+    margin-bottom: 10px;
 }
 
-#form {
-    margin-top: 20px;
+#post-form h2 {
+    font-size: 24px;
+    color: #1f5d5e;
+    margin-bottom: 20px;
+}
+
+/* Estilo para a imagem do logo */
+img#logo {
+    width: 140px;
+    height: 140px; 
+    object-fit: cover; 
+    border-radius: 50%;
+    display: block; 
+    margin: 0 auto; 
+}
+
+h1, h2 {
+    text-align: justify;
+    margin-top: auto;
+    margin-bottom: 20px;
+    color: #1f5d5e;
 }
 
 .post {
+    max-width: 800px;
+    margin: 0 auto;
     margin-top: 20px;
-    max-width: 100%;
-    overflow: hidden;
-    max-height: 100%;
     padding: 20px;
     border: 1px solid #ced4da;
     border-radius: 10px;
@@ -37,16 +55,8 @@ h1 {
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
 }
 
-.post p{
-    max-height: 100%;
-    max-width: none;
-}
-
-/* Comments */
 .comment {
     margin-top: 10px;
-    max-height: 100%;
-    overflow-y: auto;
     margin-bottom: 10px;
     padding: 10px;
     border: 1px solid #e9ecef;
@@ -54,42 +64,51 @@ h1 {
     background-color: #f8f9fa;
 }
 
-.show-comments-link {
-    color: #69818D; 
-    cursor: pointer; 
+/* Estilos para o formulário de edição */
+.edit-form {
+    display: none;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
 }
 
-/* Buttons */
-button {
+.edit-form input[type="text"],
+.edit-form textarea {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.edit-form .save-button .cancel-button{
     background-color: #007bff;
     color: #ffffff;
     border: none;
     padding: 10px 20px;
-    cursor: pointer;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
+    cursor: pointer;
 }
 
-button:hover {
-    background-color: #0056b3;
+/* Estilos para os botões e contêineres de botões */
+.button-container {
+    text-align: right;
+    margin-bottom: 10px;
 }
 
-.theme-toggle-button {
-    float: right;
-}
-
-.create-post-button {
+.button-container button {
+    margin-left: 10px;
     background-color: #007bff;
     color: #ffffff;
     border: none;
     padding: 10px 20px;
-    cursor: pointer;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
-    margin-left: 10px; /* Adicione um espaçamento entre os botões */
+    cursor: pointer;
 }
 
-.create-post-button:hover {
+.button-container button:hover {
     background-color: #0056b3;
 }
 
@@ -99,42 +118,55 @@ input[type="text"], textarea {
     margin-bottom: 10px;
     border: 1px solid #ced4da;
     border-radius: 5px;
-    font: inherit;
     font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+}
+/* Estilos para a entrada de comentário e botão de adicionar comentário */
+.comment-input {
+    width: calc(100% - 22px);
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
-.button-container{
-    display: flex;
-    justify-content: flex-end; /* Alinha os filhos à direita */
-    margin-top: 10px;
-}
-.button-container button {
-    margin-left: 10px; /* Adicione um espaçamento entre os botões */
-}
-
-/* Adicione transições suaves para elementos clicáveis e campos de entrada */
-button, input[type="text"], textarea {
-    transition: background-color 0.3s ease, color 0.3s ease;
-    margin-top: 5px;
+.comment-container button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+.comment-container button:hover {
+    background-color: #0056b3;
 }
 
+.show-comments-link {
+    color: gray;
+    cursor: pointer;
+}
+
+.hide-comments {
+    display: none; 
+    max-height: 50px;
+    overflow: hidden;
+}
+
+/* responsividade */
 @media (max-width: 1200px) {
-    input[type="text"], textarea {
+    input[type="text"],
+    textarea,
+    .comment-input {
         font-size: 14px;
     }
 }
 
 @media (max-width: 992px) {
-    input[type="text"], textarea {
+    input[type="text"],
+    textarea,
+    .comment-input {
         font-size: 12px;
     }
 }
@@ -149,13 +181,28 @@ button, input[type="text"], textarea {
         margin-top: 10px;
     }
 
-    button {
-        font-size: 14px;
-        padding: 8px 16px;
+    .button-container {
+        text-align: center;
+        margin-bottom: 10px;
+        /*font-size: 14px;
+        padding: 8px 16px;*/
     }
 
-    input[type="text"], textarea {
+    .button-container button {
+        margin: 0 5px;
+    }
+
+    input[type="text"],
+    textarea,
+    .comment-input {
         font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    img#logo {
+        width: 40px; 
+        height: 40px; 
     }
 }
 
@@ -165,12 +212,24 @@ body.dark-theme {
     color: #ffffff;
 }
 
+body.dark-theme .post,
+body.dark-theme .post h2 {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.dark-theme #post-form h1,
+.dark-theme #post-form h2 {
+    color: #ffffff;
+}
+
 .dark-theme .container {
     background-color: #1f1f1f;
     border-color: #444;
+    color: #ffffff;
 }
 
-.dark-theme .post {
+.dark-theme #post-container {
     background-color: #333;
     border-color: #555;
 }
@@ -181,11 +240,32 @@ body.dark-theme {
 }
 
 .dark-theme button {
-    background-color: #007bff;
+    background-color: #444;
     color: #ffffff;
 }
 
 .dark-theme button:hover {
-    background-color: #0056b3;
+    background-color: #444;
+}
+body.dark-theme .edit-form {
+    background-color: #1f1f1f;
+    color: #ffffff;
+    border-color: #444;
 }
 
+body.dark-theme .edit-form input[type="text"],
+body.dark-theme .edit-form textarea {
+    border-color: #444;
+    color: #ffffff;
+    background-color: #333;
+}
+
+body.dark-theme .edit-form .save-button,
+body.dark-theme .edit-form .cancel-button {
+    background-color: #444;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
