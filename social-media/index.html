@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Nivel 1 - Social Media</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -12,19 +13,22 @@
     <div class="container">
         <div class="button-container">
             <button id="themeToggle">Alterar Tema</button>
-        </div>       
-        <h1>Social Media</h1>
-        <div id="form">
-            <input type="text" id="postTitle" placeholder="Título">
-            <textarea id="postContent" placeholder="Conteúdo do post"></textarea>
-            <div class="button-container">
-                <button onclick="criarPost()" class="create-post-button">Criar Post</button>
-            </div> 
         </div>
-        <div id="posts"></div>
+            <img id="logo" src="./assets/logo.png" alt="Logo do Blog" width="50" height="50">   
+        <div id="post-form">
+            <h1>Sua Voz,<br> Suas Histórias</h1>
+            <h2>O que você quer compartilhar?</h2>
+            <input type="text" id="post-title" placeholder="Escreva um Título...">
+            <textarea id="post-content" placeholder="Compartilhe seu Mundo"></textarea>
+            <div class="button-container">
+            <button class="button-container" onclick="createPost()">Compartilhar</button></div>
+        </div>
+        
+    </div>
+    <div id="posts-container">
+        <!-- Os posts serão exibidos aqui -->
     </div>
 
     <script src="script.js"></script>
 </body>
-
 </html>
