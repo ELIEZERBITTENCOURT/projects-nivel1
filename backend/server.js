@@ -6,6 +6,7 @@ const commentsRouter = require('./routes/comments');
 const errorHandler = require('./middlewares/errorHandler');
 const initDB = require('./config/initDB'); 
 
+const userRouter = require('./routes/user');
 const app = express();
 const PORT = 3000;
 
@@ -14,6 +15,7 @@ initDB();
 app.use(cors());
 app.use(bodyParser.json());
 
+app.use('/user', userRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
 
