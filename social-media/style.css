@@ -1,89 +1,133 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos Globais */
 body {
     font-family: 'Poppins', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f8f9fa;
+}
+
+/**** HEADER ****/
+header, .nav-bar {
+    background-color: #1f1f1f;
+    color: #fff;
+    padding: 10px 20px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-bar {
+    display: flex;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.menu img {
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    margin-right: 10px; 
+}
+
+.menu p {
+    margin: 0;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.menu-list {
+    list-style: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    margin-left: 40px;
 }
 
-.container {
-    max-width: 800px;
-    margin: 0 auto;
+.menu-list li {
+    margin-right: 20px; 
+}
+
+.menu-link {
+    color: #fff; 
+    text-decoration: none; 
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s ease; 
+}
+
+.menu-link:hover {
+    color: #a8ccf0; 
+    text-decoration: underline; 
+}
+
+.button-container button {
+    background-color: #fff; 
+    color: #007bff; 
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+.button-container button:hover {
+    background-color: #007bff; 
+    color: #fff; 
+}
+
+/**** MAIN ****/
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/**** POSTS ****/
+.post-form {
     background-color: #4cb3a0;
     padding: 20px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    margin-top: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    max-width: 800px;
+    width: 100%;
 }
 
-#post-form h1 {
+.post-form h1 {
     font-size: 36px;
     color: #1f5d5e;
     margin-bottom: 10px;
 }
 
-#post-form h2 {
+.post-form h2 {
     font-size: 24px;
     color: #1f5d5e;
     margin-bottom: 20px;
 }
 
-/* Estilo para a imagem do logo */
-img#logo {
-    width: 140px;
-    height: 140px; 
-    object-fit: cover; 
-    border-radius: 50%;
-    display: block; 
-    margin: 0 auto; 
-}
-
-h1, h2 {
-    text-align: justify;
-    margin-top: auto;
-    margin-bottom: 20px;
-    color: #1f5d5e;
-}
-
-.post {
-    max-width: 800px;
-    margin: 0 auto;
-    margin-top: 20px;
-    padding: 20px;
+.post-form input[type="text"],
+.post-form textarea {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
     border: 1px solid #ced4da;
-    border-radius: 10px;
-    background-color: #ffffff;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-}
-
-.comment {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #e9ecef;
     border-radius: 5px;
-    background-color: #f8f9fa;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
 }
 
-/* Estilos para o formulário de edição */
-.edit-form {
-    display: none;
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #ffffff;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-}
-
-.edit-form input[type="text"],
-.edit-form textarea {
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.edit-form .save-button .cancel-button{
+.post-form button {
     background-color: #007bff;
     color: #ffffff;
     border: none;
@@ -92,10 +136,50 @@ h1, h2 {
     cursor: pointer;
 }
 
-/* Estilos para os botões e contêineres de botões */
+.post-form button:hover {
+    background-color: #0056b3;
+}
+
+.posts-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+}
+
+.posts-container h2 {
+    color: #1f5d5e;
+}
+
+.post {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ced4da;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0.2, 0, 0.2);
+}
+
+/**** FOOTER ****/
+footer {
+    background-color: #1f1f1f;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
+
+/**** ESTILOS PARA OS BOTÕES E CONTÊINERES DE BOTÕES ****/
 .button-container {
+    display: flex;
     text-align: right;
+    justify-content: flex-end;
     margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .button-container button {
@@ -112,22 +196,56 @@ h1, h2 {
     background-color: #0056b3;
 }
 
-input[type="text"], textarea {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    font-size: 16px;
-    font-family: 'Poppins', sans-serif;
-}
-/* Estilos para a entrada de comentário e botão de adicionar comentário */
-.comment-input {
-    width: calc(100% - 22px);
+/* Estilos para os Formulários de Edição */
+.edit-form {
+    color: #1f5d5e;
+    display: flex;
     margin-bottom: 20px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.edit-form input[type="text"],
+.edit-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+.edit-form input[type="text"]:focus,
+.edit-form textarea:focus {
+    border-color: #007bff;
+}
+
+/* Estilos para os Comentários e Botões de Comentários */
+.comment {
+    display:flexbox;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #e9ecef;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+}
+
+.comment p {
+    margin: 0;
+    word-wrap: break-word;
+}
+
+.comment .button-container {
+    display: flex;
 }
 
 .comment-container button {
@@ -143,129 +261,112 @@ input[type="text"], textarea {
     background-color: #0056b3;
 }
 
-.show-comments-link {
+.show-comments-link{
     color: gray;
+    cursor: pointer;
+}
+.show-comments-link:hover{
+    color:#0056b3;
     cursor: pointer;
 }
 
 .hide-comments {
-    display: none; 
+    display: none;
     max-height: 50px;
     overflow: hidden;
 }
 
-/* responsividade */
-@media (max-width: 1200px) {
-    input[type="text"],
-    textarea,
-    .comment-input {
-        font-size: 14px;
-    }
+/* Estilos para os Inputs e Botões de Comentários */
+.comment-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
 }
 
-@media (max-width: 992px) {
-    input[type="text"],
-    textarea,
-    .comment-input {
-        font-size: 12px;
-    }
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding: 10px;
-    }
-
-    .post {
-        padding: 10px;
-        margin-top: 10px;
-    }
-
-    .button-container {
-        text-align: center;
-        margin-bottom: 10px;
-        /*font-size: 14px;
-        padding: 8px 16px;*/
-    }
-
-    .button-container button {
-        margin: 0 5px;
-    }
-
-    input[type="text"],
-    textarea,
-    .comment-input {
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 768px) {
-    img#logo {
-        width: 40px; 
-        height: 40px; 
-    }
-}
-
-/*****ALTERA O TEMA DO BLOG*/
-body.dark-theme {
-    background-color: #121212;
-    color: #ffffff;
-}
-
-body.dark-theme .post,
-body.dark-theme .post h2 {
-    background-color: #121212;
-    color: #ffffff;
-}
-
-.dark-theme #post-form h1,
-.dark-theme #post-form h2 {
-    color: #ffffff;
-}
-
-.dark-theme .container {
-    background-color: #1f1f1f;
-    border-color: #444;
-    color: #ffffff;
-}
-
-.dark-theme #post-container {
-    background-color: #333;
-    border-color: #555;
-}
-
-.dark-theme .comment {
-    background-color: #444;
-    border-color: #666;
-}
-
-.dark-theme button {
-    background-color: #444;
-    color: #ffffff;
-}
-
-.dark-theme button:hover {
-    background-color: #444;
-}
-body.dark-theme .edit-form {
-    background-color: #1f1f1f;
-    color: #ffffff;
-    border-color: #444;
-}
-
-body.dark-theme .edit-form input[type="text"],
-body.dark-theme .edit-form textarea {
-    border-color: #444;
-    color: #ffffff;
-    background-color: #333;
-}
-
-body.dark-theme .edit-form .save-button,
-body.dark-theme .edit-form .cancel-button {
-    background-color: #444;
-    color: #ffffff;
+.comment-input button {
+    background-color: #007bff;
+    color: #fff;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.comment-input button:hover {
+    background-color: #0056b3;
+}
+
+/* Dark Theme */
+.dark-theme {
+    background-color: #121212;
+    color: #fff;
+}
+
+.dark-theme header, 
+.dark-theme .nav-bar {
+    background-color: #1f1f1f;
+}
+
+.dark-theme .menu-link {
+    color: #fff;
+}
+
+.dark-theme .button-container button {
+    background-color: #fff;
+    color: #1f1f1f;
+}
+
+.dark-theme .button-container button:hover{
+    background-color: #3c3c3c;
+    color: #fff;
+}
+
+.dark-theme .post-form {
+    background-color: #164d4d;
+}
+.dark-theme .post-form h1,
+.dark-theme .post-form h2{
+    color: #fff;
+}
+
+.dark-theme .post-form button{
+    background-color: #fff;
+    color: #1f1f1f;
+}
+
+.dark-theme .post-form button:hover{
+    background-color: #3c3c3c;
+    color: #fff;
+    transition: 0.5s;
+}
+
+.dark-theme .edit-form {
+    background-color: #1f1f1f;
+    color: #fff;
+}
+
+.dark-theme .post {
+    background-color: #1f1f1f;
+    border: 1px solid #3c3c3c;
+}
+
+.dark-theme footer {
+    background-color: #1f1f1f;
+}
+
+.dark-theme .comment {
+    background-color: #1f1f1f;
+    border: 1px solid #3c3c3c;
+    color: #fff;
+}
+
+.dark-theme .comment-input {
+    background-color: #1f1f1f;
+    border: 1px solid #3c3c3c;
+    color: #fff;
 }
