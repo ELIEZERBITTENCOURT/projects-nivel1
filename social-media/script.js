@@ -26,7 +26,7 @@ function exibirPosts() {
     })
         .then(response => response.json())
         .then(postsData => {
-            let posts = postsData;
+            let posts = postsData.reverse();
             let postsContainer = document.getElementById("posts-container");
             postsContainer.innerHTML = "";
 
@@ -52,9 +52,9 @@ function exibirPosts() {
                 </div>
                 
                 <div class="comment-container" id="comments${post.id}"></div>
-                    <p class="show-comments-link" id="showComments${post.id}">Ver todos os ${post.comments.length} comentários</p>
+                <p class="show-comments-link" id="showComments${post.id}">Ver todos os ${post.comments.length} comentários</p>
                 <div class="hidden-comments" id="hiddenComments${post.id}"></div>
-                    <input type="text" id="commentInput${post.id}" placeholder="Adicionar um comentário">
+                <input type="text" class="comment-input" id="commentInput${post.id}" placeholder="Adicionar um comentário">
                 <div class="button-container">
                     <button id="btnAdicionarComentario" onclick="adicionarComentario(${post.id})">Comentar</button>
                 </div>
