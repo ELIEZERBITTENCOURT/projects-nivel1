@@ -28,9 +28,20 @@ router.post('/signup', async (req, res) => {
 
 // Rota para fazer login
 router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
+    const { usernameOrEmail, password } = req.body;
+    
+    if (!usernameOrEmail) {
+        return res.status(400).json({ error: 'Nome de usuário ou email é obrigatório.' });
+    }
 
-    const user = await User.findByEmail(email);
+    let user;
+    if (usernameOrEmail.includes('@')) {
+        user = await User.findByEmail(usernameOrEmail);
+    } else {
+        // Caso contrário, tratar como um nome de usuário
+        user = await User.findByUsername(usernameOrEmail);
+    }
+
     if (!user) {
         return res.status(401).json({ error: 'Credenciais inválidas.' });
     }
@@ -42,7 +53,7 @@ router.post('/login', async (req, res) => {
 
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    res.json({ message: 'Login bem-sucedido!', token });
+    res.json({ message: 'Login bem-sucedido!', token, userName: user.name, userEmail: user.email  });
 });
 
 module.exports = router;
