@@ -13,7 +13,24 @@ class User {
             });
         });
     }
-
+    
+    static findByUsername(username) {
+        return new Promise((resolve, reject) => {
+            const query = 'SELECT * FROM users WHERE username = ?';
+            mysqlConnection.query(query, [username], (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    if (rows.length > 0) {
+                        resolve(rows[0]);
+                    } else {
+                        resolve(null);
+                    }
+                }
+            });
+        });
+    }
+    
     static findByEmail(email) {
         return new Promise((resolve, reject) => {
             const query = 'SELECT * FROM users WHERE email = ?';
