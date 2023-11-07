@@ -1,4 +1,5 @@
 require('dotenv').config();
+const authenticateToken = require('../middlewares/authenticateToken');
 const jwt = require('jsonwebtoken');
 const express = require('express');
 const router = express.Router();
@@ -38,7 +39,6 @@ router.post('/login', async (req, res) => {
     if (usernameOrEmail.includes('@')) {
         user = await User.findByEmail(usernameOrEmail);
     } else {
-        // Caso contrário, tratar como um nome de usuário
         user = await User.findByUsername(usernameOrEmail);
     }
 
@@ -54,6 +54,49 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
     res.json({ message: 'Login bem-sucedido!', token, userName: user.name, userEmail: user.email  });
+});
+
+// Rota para alterar a senha do usuário
+router.put('/change-password', authenticateToken, async (req, res) => {
+    const userId = req.user.userId;
+    const { newPassword } = req.body;
+
+    try {
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        await User.changePassword(userId, hashedPassword);
+        res.json({ message: 'Senha alterada com sucesso!' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erro ao alterar a senha.' });
+    }
+});
+
+// Rota para editar o perfil do usuário
+router.put('/edit-profile', async (req, res) => {
+    const userId = req.user.userId;
+    const { nome, sobrenome } = req.body;
+
+    try {
+        await User.editProfile(userId, { nome, sobrenome });
+        res.json({ message: 'Informações pessoais atualizadas com sucesso!' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erro ao atualizar as informações pessoais.' });
+    }
+});
+
+// Rota para atualizar as preferências de comunicação do usuário
+router.put('/update-preferences', async (req, res) => {
+    const userId = req.user.userId;
+    const { emailNotifications, messageNotifications } = req.body;
+
+    try {
+        await User.updatePreferences(userId, { emailNotifications, messageNotifications });
+        res.json({ message: 'Preferências de comunicação atualizadas com sucesso!' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erro ao atualizar as preferências de comunicação.' });
+    }
 });
 
 module.exports = router;
