@@ -1,0 +1,113 @@
+/* Reset CSS e estilos globais podem ser incluídos aqui, se necessário */
+
+.criar-conta-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.criar-conta-content {
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.criar-conta-content h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.criar-conta-content form {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.criar-conta-content form label {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+    border-color: #007bff;
+}
+
+.criar-conta-content form button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.criar-conta-content form button:hover {
+    background-color: #0056b3;
+}
+
+.criar-conta-content p {
+    margin: 0;
+}
+
+/* Media Queries para Responsividade */
+@media screen and (max-width: 768px) {
+    .criar-conta-content {
+        max-width: 100%;
+        padding: 10px;
+    }
+
+    .criar-conta-content h1 {
+        font-size: 30px;
+        margin-bottom: 15px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .criar-conta-content form button {
+        padding: 8px 16px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .criar-conta-content h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+        font-size: 10px;
+        padding: 6px;
+    }
+
+    .criar-conta-content form button {
+        padding: 6px 12px;
+    }
+}

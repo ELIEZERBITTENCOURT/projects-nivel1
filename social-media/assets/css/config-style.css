@@ -1,0 +1,266 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos Globais */
+body {
+    font-family: 'Poppins', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Estilos específicos para a página About */
+/**** HEADER ****/
+header, .nav-bar {
+    background-color: #1f1f1f;
+    color: #fff;
+    padding: 10px 20px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-bar {
+    display: flex;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.menu img {
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    margin-right: 10px; 
+}
+
+.menu p {
+    margin: 0;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    margin-left: 40px;
+}
+
+.menu-list li {
+    margin-right: 20px; 
+}
+
+.menu-link {
+    color: #fff; 
+    text-decoration: none; 
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s ease; 
+}
+
+.menu-link:hover {
+    color: #a8ccf0; 
+    text-decoration: underline; 
+}
+
+.button-container button {
+    background-color: #007bff; 
+    color: #fff; 
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+.button-container button:hover {
+    background-color: #fff; 
+    color: #007bff; 
+}
+
+/*** MAIN ****/
+.configuracao-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 100px;
+}
+
+.configuracao-content {
+    max-width: 800px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+form {
+    text-align: left;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="url"],
+checkbox {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="url"]:focus,
+checkbox:focus {
+    border-color: #007bff;
+}
+
+form button {
+    align-self: flex-end;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+/**** FOOTER ****/
+footer {
+    background-color: #1f1f1f;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
+
+.footer-text {
+    margin-bottom: 0;
+}
+
+/* Dark Theme */
+.dark-theme {
+    background-color: #121212;
+    color: #fff;
+}
+
+.dark-theme header, 
+.dark-theme .nav-bar {
+    background-color: #1f1f1f;
+}
+
+.dark-theme .menu-link {
+    color: #fff;
+}
+.dark-theme .menu-link:hover{
+    color: #a8ccf0; 
+    text-decoration: underline; 
+}
+
+.dark-theme .button-container button {
+    background-color: #fff;
+    color: #1f1f1f;
+}
+
+.dark-theme .button-container button:hover{
+    background-color: #3c3c3c;
+    color: #fff;
+}
+
+.dark-theme .configuracao-content h2{
+    color: #164d4d;
+}
+
+.dark-theme form button {
+    background-color: #3c3c3c;
+    color: #fff;
+}
+
+.dark-theme form button:hover{
+    background-color: #fff;
+    color: #1f1f1f;
+}
+
+/* Media Queries para Responsividade */
+@media screen and (max-width: 768px) {
+    .configuracao-section {
+        flex-direction: column;
+        margin-bottom: 50px;
+    }
+
+    .configuracao-content {
+        max-width: 100%;
+    }
+
+    h1 {
+        font-size: 30px;
+        margin-bottom: 15px;
+    }
+
+    h2 {
+        font-size: 20px;
+        margin-bottom: 15px;
+        margin-top: 15px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="url"],
+    checkbox {
+        font-size: 12px;
+    }
+
+    form button {
+        padding: 8px 16px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .configuracao-section {
+        padding: 10px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="url"],
+    checkbox {
+        font-size: 10px;
+        padding: 8px;
+    }
+}

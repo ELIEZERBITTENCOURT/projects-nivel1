@@ -1,0 +1,170 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos Globais */
+body {
+    font-family: 'Poppins', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Estilos específicos para a página About */
+/**** HEADER ****/
+header, .nav-bar {
+    background-color: #1f1f1f;
+    color: #fff;
+    padding: 10px 20px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-bar {
+    display: flex;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.menu img {
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    margin-right: 10px; 
+}
+
+.menu p {
+    margin: 0;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    margin-left: 40px;
+}
+
+.menu-list li {
+    margin-right: 20px; 
+}
+
+.menu-link {
+    color: #fff; 
+    text-decoration: none; 
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s ease; 
+}
+
+.menu-link:hover {
+    color: #a8ccf0; 
+    text-decoration: underline; 
+}
+
+.button-container button {
+    background-color: #007bff; 
+    color: #fff; 
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+.button-container button:hover {
+    background-color: #fff; 
+    color: #007bff; 
+}
+
+/*** MAIN ****/
+.about-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.about-content {
+    max-width: 800px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/**** FOOTER ****/
+footer {
+    background-color: #1f1f1f;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
+
+.footer-text {
+    margin-bottom: 0;
+}
+
+/* Dark Theme */
+.dark-theme {
+    background-color: #121212;
+    color: #fff;
+}
+
+.dark-theme header, 
+.dark-theme .nav-bar {
+    background-color: #1f1f1f;
+}
+
+.dark-theme .menu-link {
+    color: #fff;
+}
+.dark-theme .menu-link:hover{
+    color: #a8ccf0; 
+    text-decoration: underline; 
+}
+
+.dark-theme .button-container button {
+    background-color: #fff;
+    color: #1f1f1f;
+}
+
+.dark-theme .button-container button:hover{
+    background-color: #3c3c3c;
+    color: #fff;
+}
+
+/* Media Queries para Responsividade */
+@media screen and (max-width: 768px) {
+    .nav-bar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .menu {
+        margin-top: 10px;
+        margin-left: 0;
+    }
+
+    .menu-list {
+        display: none;
+    }
+}
