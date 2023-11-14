@@ -1,102 +1,126 @@
 require('dotenv').config();
 const authenticateToken = require('../middlewares/authenticateToken');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
+
 const User = require('../models/User');
+const Post = require('../models/Post');
+const Comment = require('../models/Comment');
 
 // Rota para criar uma nova conta
-router.post('/signup', async (req, res) => {
-    const { name, email, password } = req.body;
-
-    const existingUser = await User.findByEmail(email);
-    if (existingUser) {
-        return res.status(400).json({ error: 'E-mail já está em uso.' });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
+router.post('/register', async (req, res) => {
     try {
-        const newUser = await User.createUser({ name, email, password: hashedPassword });
-        res.status(201).json({ message: 'Conta criada com sucesso!', user: newUser });
+      const { name, email, password } = req.body;
+  
+      // Verifique se o e-mail já está em uso
+      const existingUser = await User.findByEmail(emailmail);
+      if (existingUser) {
+        return res.status(400).json({ error: 'E-mail já está em uso.' });
+      }
+  
+      // Criptografe a senha antes de salvar no banco de dados
+      const hashedPassword = await bcrypt.hash(password, 10);
+  
+      // Crie um novo usuário
+      const newUser = await User.createUser({
+        name,
+        email,
+        password: hashedPassword,
+      });
+  
+      res.status(201).json({ message: 'Conta criada com sucesso.', user: newUser });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Erro ao criar a conta.' });
+      console.error(error);
+      res.status(500).json({ error: 'Erro ao criar a conta.' });
     }
-});
-
+  });
 
 // Rota para fazer login
 router.post('/login', async (req, res) => {
-    const { usernameOrEmail, password } = req.body;
-    
-    if (!usernameOrEmail) {
-        return res.status(400).json({ error: 'Nome de usuário ou email é obrigatório.' });
-    }
-
-    let user;
-    if (usernameOrEmail.includes('@')) {
-        user = await User.findByEmail(usernameOrEmail);
-    } else {
-        user = await User.findByUsername(usernameOrEmail);
-    }
-
-    if (!user) {
+    try {
+      const { email, password } = req.body;
+  
+      // Encontre o usuário pelo e-mail
+      const user = await User.findByEmail(email);
+      if (!user) {
         return res.status(401).json({ error: 'Credenciais inválidas.' });
-    }
-
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
+      }
+  
+      // Verifique a senha
+      const passwordMatch = await bcrypt.compare(password, user.password);
+      if (!passwordMatch) {
         return res.status(401).json({ error: 'Credenciais inválidas.' });
+      }
+  
+      // Gere um token de autenticação
+      const token = jwt.sign({ id: user.id, email: user.email }, secretKey, {
+        expiresIn: '1h', // Expira em 1 hora
+      });
+  
+      res.json({ token });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Erro ao fazer login.' });
     }
-
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-    res.json({ message: 'Login bem-sucedido!', token, userName: user.name, userEmail: user.email  });
-});
+  });
 
 // Rota para alterar a senha do usuário
-router.put('/change-password', authenticateToken, async (req, res) => {
-    const userId = req.user.userId;
-    const { newPassword } = req.body;
-
+router.post('/change-password', authenticateToken, async (req, res) => {
     try {
-        const hashedPassword = await bcrypt.hash(newPassword, 10);
-        await User.changePassword(userId, hashedPassword);
-        res.json({ message: 'Senha alterada com sucesso!' });
+      const userId = req.user.id;
+      const { newPassword } = req.body;
+  
+      // Altere a senha do usuário
+      await User.changePassword(userId, newPassword);
+  
+      res.json({ message: 'Senha alterada com sucesso.' });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Erro ao alterar a senha.' });
+      console.error(error);
+      res.status(500).json({ error: 'Erro ao alterar a senha.' });
     }
-});
-
-// Rota para editar o perfil do usuário
-router.put('/edit-profile', async (req, res) => {
-    const userId = req.user.userId;
-    const { nome, sobrenome } = req.body;
-
+  });
+  
+// Rota de usuário autenticado para criar um post
+router.post('/create-post', authenticateToken, async (req, res) => {
     try {
-        await User.editProfile(userId, { nome, sobrenome });
-        res.json({ message: 'Informações pessoais atualizadas com sucesso!' });
+      const userId = req.user.id;
+      const { title, content } = req.body;
+  
+      // Crie um novo post associado ao usuário autenticado
+      const newPost = await Post.create({
+        title,
+        content,
+        userId,
+      });
+  
+      res.status(201).json({ message: 'Post criado com sucesso.', post: newPost });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Erro ao atualizar as informações pessoais.' });
+      console.error(error);
+      res.status(500).json({ error: 'Erro ao criar o post.' });
     }
-});
-
-// Rota para atualizar as preferências de comunicação do usuário
-router.put('/update-preferences', async (req, res) => {
-    const userId = req.user.userId;
-    const { emailNotifications, messageNotifications } = req.body;
-
+  });
+  
+  // Rota para criar um novo comentário pelo usuário autenticado
+  router.post('/create-comment', authenticateToken, async (req, res) => {
     try {
-        await User.updatePreferences(userId, { emailNotifications, messageNotifications });
-        res.json({ message: 'Preferências de comunicação atualizadas com sucesso!' });
+      const userId = req.user.id;
+      const { postId, content } = req.body;
+  
+      // Crie um novo comentário associado ao usuário autenticado e ao post específico
+      const newComment = await Comment.create({
+        userId,
+        postId,
+        content,
+      });
+  
+      res.status(201).json({ message: 'Comentário criado com sucesso.', comment: newComment });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Erro ao atualizar as preferências de comunicação.' });
+      console.error(error);
+      res.status(500).json({ error: 'Erro ao criar o comentário.' });
     }
-});
+  });
+  
 
 module.exports = router;

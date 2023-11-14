@@ -1,53 +1,22 @@
-const mysqlConnection = require('./db');
+const sequelize = require('./db');
+const User = require('../models/User');
+const Post = require('../models/Post');
+const Comment = require('../models/Comment');
 
-function initDB() {
-    const createUserTableQuery = `
-        CREATE TABLE IF NOT EXISTS users (
-            id INT PRIMARY KEY AUTO_INCREMENT,
-            name VARCHAR(255) NOT NULL,
-            email VARCHAR(255) NOT NULL UNIQUE,
-            password VARCHAR(255) NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-        ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-    `;
+async function initDB() {
+  try {
+    await sequelize.authenticate();
+    console.log('Conexão bem-sucedida.');
 
-    const createPostsTableQuery = `
-        CREATE TABLE IF NOT EXISTS posts (
-            id INT PRIMARY KEY AUTO_INCREMENT,
-            title VARCHAR(255) NOT NULL,
-            content TEXT,
-            likes INT DEFAULT 0,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-        )
-    `;
+    // Sincronizar os modelos com o banco de dados
+    await User.sync({ force: false });
+    await Post.sync({ force: false });
+    await Comment.sync({ force: false });
 
-    const createCommentsTableQuery = `
-        CREATE TABLE IF NOT EXISTS comments (
-            id INT PRIMARY KEY AUTO_INCREMENT,
-            post_id INT,
-            text TEXT,
-            likes INT DEFAULT 0,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (post_id) REFERENCES posts(id)
-        ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-    `;
-
-    mysqlConnection.query(createUserTableQuery, (err) => {
-        if (err) throw err;
-        console.log('Tabela de usuários criada com sucesso!');
-    });
-
-    mysqlConnection.query(createPostsTableQuery, (err) => {
-        if (err) throw err;
-        console.log('Tabela de posts criada com sucesso!');
-    });
-
-    mysqlConnection.query(createCommentsTableQuery, (err) => {
-        if (err) throw err;
-        console.log('Tabela de comentários criada com sucesso!');
-    });
+    console.log('Modelos sincronizados com o banco de dados.');
+  } catch (error) {
+    console.error('Erro na conexão com o banco de dados:', error);
+  }
 }
 
 module.exports = initDB;

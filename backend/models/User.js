@@ -1,108 +1,48 @@
-const mysqlConnection = require('../config/db');
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
 
-class User {
-    static createUser({ name, email, password }) {
-        return new Promise((resolve, reject) => {
-            const query = 'INSERT INTO users (name, email, password) VALUES (?, ?, ?)';
-            mysqlConnection.query(query, [name, email, password], (err, result) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve({ id: result.insertId, name, email });
-                }
-            });
-        });
-    }
-    
-    static findByUsername(username) {
-        return new Promise((resolve, reject) => {
-            const query = 'SELECT * FROM users WHERE username = ?';
-            mysqlConnection.query(query, [username], (err, rows) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    if (rows.length > 0) {
-                        resolve(rows[0]);
-                    } else {
-                        resolve(null);
-                    }
-                }
-            });
-        });
-    }
-    
-    static findByEmail(email) {
-        return new Promise((resolve, reject) => {
-            const query = 'SELECT * FROM users WHERE email = ?';
-            mysqlConnection.query(query, [email], (err, rows) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    if (rows.length > 0) {
-                        resolve(rows[0]);
-                    } else {
-                        resolve(null);
-                    }
-                }
-            });
-        });
-    }
+const User = sequelize.define('User', {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+});
 
-    static findById(userId) {
-        return new Promise((resolve, reject) => {
-            const query = 'SELECT * FROM users WHERE id = ?';
-            mysqlConnection.query(query, [userId], (err, rows) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    if (rows.length > 0) {
-                        resolve(rows[0]);
-                    } else {
-                        resolve(null);
-                    }
-                }
-            });
-        });
-    }
+// Função para criar um novo usuário
+User.createUser = async function ({ name, email, password }) {
+  return await User.create({ name, email, password });
+};
 
-    static changePassword(userId, hashedPassword) {
-        return new Promise((resolve, reject) => {
-            const query = 'UPDATE users SET password = ? WHERE id = ?';
-            mysqlConnection.query(query, [hashedPassword, userId], (err, result) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(result);
-                }
-            });
-        });
-    }
+// Função para encontrar usuário por e-mail
+User.findByEmail = async function (email) {
+  if (!email) {
+    throw new Error('Email is undefined');
+  }
 
-    static editProfile(userId, { nome, endereco }) {
-        return new Promise((resolve, reject) => {
-            const query = 'UPDATE users SET name = ?, address = ? WHERE id = ?';
-            mysqlConnection.query(query, [nome, endereco, userId], (err, result) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve({ message: 'Informações pessoais atualizadas com sucesso!' });
-                }
-            });
-        });
-    }
+  try {
+    const user = await User.findOne({
+      where: {
+        email: email,
+      },
+    });
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
 
-    static updatePreferences(userId, { emailNotifications, messageNotifications }) {
-        return new Promise((resolve, reject) => {
-            const query = 'UPDATE users SET email_notifications = ?, message_notifications = ? WHERE id = ?';
-            mysqlConnection.query(query, [emailNotifications, messageNotifications, userId], (err, result) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve({ message: 'Preferências de comunicação atualizadas com sucesso!' });
-                }
-            });
-        });
-    }
-}
+// Função para alterar a senha do usuário
+User.changePassword = async function (userId, newPassword) {
+  return await User.update({ password: newPassword }, { where: { id: userId } });
+};
 
 module.exports = User;

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Nivel 1 - Social Media - Configurações</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/config-style.css"> 
+</head>
+
+<body>
+    <header>
+        <nav class="nav-bar">
+
+            <div class="menu">
+                <img src="./assets/user.png" alt="Foto do Usuário">
+                <p id="userGreeting">Olá,</p>
+                <ul class="menu-list">
+                    <li><a href="index.html" class="menu-link">Página Principal</a></li>
+                    <li><a href="config.html" class="menu-link">Configuração</a></li>
+                    <li><a href="login.html" class="menu-link" onclick="mostrarConteudo('sair')">Sair</a></li>
+                </ul>
+            </div>
+
+            <div class="button-container">
+                <button id="themeToggle">Alterar Tema</button>
+            </div>
+
+        </nav>
+    </header>
+
+    <main class="configuracao-section">
+        <div class="configuracao-content">
+            <h1>Configurações de Conta</h1>
+
+            <!-- Formulário para Alteração de Senha -->
+            <h2>Alteração de Senha</h2>
+            <form id="formSenha">
+                <label for="senhaAtual">Senha Atual:</label>
+                <input type="password" id="senhaAtual" name="senhaAtual" required><br>
+                <label for="novaSenha">Nova Senha:</label>
+                <input type="password" id="novaSenha" name="novaSenha" required><br>
+                <button type="submit">Alterar Senha</button>
+            </form>
+
+            <!-- Formulário para Editar Informações Pessoais -->
+            <h2>Editar Informações Pessoais</h2>
+            <form id="formPerfil">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required><br>
+                <label for="sobrenome">Sobrenome:</label>
+                <input type="text" id="sobrenome" name="sobrenome"><br>
+                <button type="submit">Salvar Alterações</button>
+            </form>
+
+            <!-- Formulário para Preferências de Comunicação -->
+            <h2>Preferências de Comunicação</h2>
+            <form id="formComunicacao">
+                <label for="emailNotifications">Receber Notificações por E-mail:</label>
+                <input type="checkbox" id="emailNotifications" name="emailNotifications"><br>
+                <label for="messageNotifications">Receber Notificações por Mensagens:</label>
+                <input type="checkbox" id="messageNotifications" name="messageNotifications"><br>
+                <button type="submit">Salvar Preferências</button>
+            </form>
+        </div>
+
+    </main>
+
+    <footer>
+        <p class="footer-text">&copy; 2023 Project Nivel 1 - Social Media. All rights reserved.</p>
+    </footer>
+
+    <script src="./assets/js/configuracao-script.js"></script>
+    <script src="./assets/js/darkTheme.js"></script>
+</body>
+
+</html>
