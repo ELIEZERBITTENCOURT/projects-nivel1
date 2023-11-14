@@ -35,7 +35,7 @@ function exibirPosts() {
     const token = localStorage.getItem('token');
 
     if (token) {
-        fetch(`${BASE_URL}/posts/user-posts`, {
+        fetch(`${BASE_URL}/posts`, {
             method: 'GET',
             headers: {
                 'Authorization': `${token}`,
