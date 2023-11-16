@@ -17,12 +17,8 @@ const User = sequelize.define('User', {
   },
 });
 
-// Função para criar um novo usuário
-User.createUser = async function ({ name, email, password }) {
-  return await User.create({ name, email, password });
-};
+User.hasMany(Post, { foreignKey: 'userId' });
 
-// Função para encontrar usuário por e-mail
 User.findByEmail = async function (email) {
   if (!email) {
     throw new Error('Email is undefined');
@@ -40,7 +36,10 @@ User.findByEmail = async function (email) {
   }
 };
 
-// Função para alterar a senha do usuário
+User.createUser = async function ({ name, email, password }) {
+  return await User.create({ name, email, password });
+};
+
 User.changePassword = async function (userId, newPassword) {
   return await User.update({ password: newPassword }, { where: { id: userId } });
 };

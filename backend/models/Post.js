@@ -1,6 +1,6 @@
-// models/Post.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
+const User = require('./User');
 
 const Post = sequelize.define('Post', {
   title: {
@@ -10,12 +10,10 @@ const Post = sequelize.define('Post', {
   content: {
     type: DataTypes.TEXT,
     allowNull: false,
-  },
-  userId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
+  }
 });
+
+Post.belongsTo(User, { foreignKey: 'userId' });
 
 Post.createPost = async function (userId, title, content) {
   return await Post.create({ userId, title, content });
@@ -27,7 +25,6 @@ Post.editPost = async function (postId, title, content) {
 
 Post.likePost = async function (userId, postId) {
   try {
-    // Implemente a lógica para atualizar os likes do post
     const post = await Post.findByPk(postId);
     post.likes.push(userId);
     await post.save();
