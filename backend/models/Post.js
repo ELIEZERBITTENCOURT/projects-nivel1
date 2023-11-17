@@ -10,10 +10,12 @@ const Post = sequelize.define('Post', {
   content: {
     type: DataTypes.TEXT,
     allowNull: false,
-  }
+  },
 });
 
-Post.belongsTo(User, { foreignKey: 'userId' });
+Post.associate = function (models) {
+  Post.belongsTo(models.User, { foreignKey: 'userId' });
+};
 
 Post.createPost = async function (userId, title, content) {
   return await Post.create({ userId, title, content });

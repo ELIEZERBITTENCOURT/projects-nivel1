@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
+const Post = require('./Post');
 
 const User = sequelize.define('User', {
   name: {
@@ -17,7 +18,9 @@ const User = sequelize.define('User', {
   },
 });
 
-User.hasMany(Post, { foreignKey: 'userId' });
+User.associate = function (models) {
+  User.hasMany(models.Post, { foreignKey: 'userId' });
+};
 
 User.findByEmail = async function (email) {
   if (!email) {

@@ -40,8 +40,7 @@ function exibirPosts() {
             headers: {
                 'Authorization': `${token}`,
                 'Content-Type': 'application/json'  
-            },
-            credentials: 'include',
+            }
         })
             .then(response => {
                 if (response.ok) {
@@ -172,7 +171,7 @@ function createPost() {
                 }
                 return response.json();
             })
-            .then(postData => {
+            .then(() => {
                 exibirPosts();
                 document.getElementById("post-title").value = "";
                 document.getElementById("post-content").value = "";
@@ -265,7 +264,7 @@ function excluirPost(postId) {
                 throw new Error('Erro ao excluir o post');
             }
         })
-        .then(data => {
+        .then(() => {
             exibirPosts();
         })
         .catch(error => console.error('Erro:', error));
